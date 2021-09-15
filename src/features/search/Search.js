@@ -8,7 +8,14 @@ export default function Search() {
     const [searchUser, setSearchUser] = useState('');
     const dispatch = useDispatch()
 
-    const search = useSelector(state => state.search)
+    const state = useSelector(state => state)
+    const search = state.search;
+    const userId = state.profile.user._id;
+    console.log(userId, "from search")
+
+    const followUser = (userId, toBeFollowedUserID) => {
+        dispatch(followButtonPressed({userId, toBeFollowedUserID}))
+    }
 
     return (
         <div className="Search mx-24 my-4">
@@ -21,7 +28,7 @@ export default function Search() {
             />
             <button 
                 className="border-2 border-l-0 border-black rounded-r-full py-2 px-4 focus:outline-none"
-                onClick={() => dispatch(searchButtonPressed(searchUser))}
+                onClick={() => dispatch(searchButtonPressed({ userId, searchUser }))}
             > 
                 search
             </button>
@@ -35,7 +42,7 @@ export default function Search() {
                         <p>posts: {user.posts.length}</p>
                         <button 
                             className="bg-blue-700 focus:bg-blue-900 text-white px-4 py-2 rounded-full"
-                            onClick={() => dispatch(followButtonPressed(user._id))}
+                            onClick={() => followUser(userId, user._id)}
                         > 
                             follow 
                         </button>

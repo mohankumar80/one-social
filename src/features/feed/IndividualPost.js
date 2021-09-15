@@ -3,13 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { faHeart as farHeart, faComment as farComment } from '@fortawesome/free-regular-svg-icons'
 import { useParams } from 'react-router'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { likeButtonPressed } from "./feedSlice";
-import { incrementLikesInLiked } from "../likes/likesSlice"
+import { likeButtonPressed, dislikeButtonPressed } from "./feedSlice";
+import { incrementLikesInLiked, decrementLikesInLiked } from "../likes/likesSlice"
 import AddComment from './AddComment';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { checkInLikes } from '../../utils';
 
 export default function IndividualPost() {
     const { postId } = useParams();
-    const feed = useSelector(state => state.feed);
+    const state = useSelector(state => state);
+    const feed = state.feed;
+    const likes = state.likes
+    const userId = state.profile.user._id;
+
 
     const dispatch = useDispatch();
     
@@ -20,8 +26,15 @@ export default function IndividualPost() {
     )
 
     const incrementLikes = post => {
-        dispatch(likeButtonPressed(post._id))
+        const postId = post._id
+        dispatch(likeButtonPressed({userId, postId}))
         dispatch(incrementLikesInLiked(post))
+    }
+
+    const decrementLikes = post => {
+        const postId = post._id
+        dispatch(dislikeButtonPressed({userId, postId}))
+        dispatch(decrementLikesInLiked(post))
     }
 
     return (
@@ -36,10 +49,17 @@ export default function IndividualPost() {
                     <FontAwesomeIcon icon={farComment} />
                     {post.comments.length}
                 </button>
-                <button className="ml-24" onClick={() => incrementLikes(post)}>
-                    <FontAwesomeIcon icon={farHeart} />
-                    { post.likes }
-                </button>
+                {
+                    checkInLikes(likes, post._id) === -1
+                    ? <button className="ml-24" onClick={() => incrementLikes(post)}> 
+                        <FontAwesomeIcon icon={farHeart} />
+                        { post.likes} 
+                    </button>
+                    : <button className="ml-24" onClick={() => decrementLikes(post)}> 
+                        <FontAwesomeIcon icon={faHeart} />
+                        { post.likes} 
+                    </button>
+                }
             </div>
             <AddComment postId={post._id} />
             {

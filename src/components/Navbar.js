@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export default function Navbar() {
     return (
@@ -20,7 +20,6 @@ export default function Navbar() {
             <li className="nav-items">
                 <NavLink to="/profile" className={({ isActive }) => ("nav-links" + (isActive ? " selected" : ""))}> Profile </NavLink>
             </li>
-            <Link to="/login"> login </Link>
         </ul>
     )
 }

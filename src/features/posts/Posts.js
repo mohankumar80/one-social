@@ -6,14 +6,17 @@ import { faHeart as farHeart, faComment as farComment } from '@fortawesome/free-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Posts() {
-    const posts = useSelector(state => state.posts);
+    const state = useSelector(state => state);
+    const posts = state.posts;
+    const userId = state.profile.user._id;
+
     const dispatch = useDispatch();
 
     useEffect(() => {
         if(posts.status === "idle") {
-            dispatch(loadPosts());
+            dispatch(loadPosts(userId));
         }
-    }, [posts, dispatch])
+    }, [userId, posts, dispatch])
     
     return (
         <div className="Posts">

@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const loadPosts = createAsyncThunk("posts/loadPosts", async() => {
-    const response = await axios.get(`https://one-social-backend.herokuapp.com/user/613c46496bc01f736e105515/post`);
+export const loadPosts = createAsyncThunk("posts/loadPosts", async(userId) => {
+    const response = await axios.get(`https://one-social-backend.herokuapp.com/user/${userId}/post`);
     return response.data
 })
 
-export const addPost = createAsyncThunk("post/addPost", async (content) => {
-    const response = await axios.post(`https://one-social-backend.herokuapp.com/user/613c46496bc01f736e105515/post`, {
+export const addPost = createAsyncThunk("post/addPost", async ({userId, content}) => {
+    const response = await axios.post(`https://one-social-backend.herokuapp.com/user/${userId}/post`, {
         content
     })
     return response.data;
@@ -38,6 +38,7 @@ export const postsSlice = createSlice({
 
         [loadPosts.rejected]: (state, action) => {
             state.status = "failed"
+            state.error = action.error.message
         },
         [addPost.pending]: (state) => {
             state.status = "loading"
@@ -50,6 +51,7 @@ export const postsSlice = createSlice({
 
         [addPost.rejected]: (state, action) => {
             state.status = "failed"
+            state.error = action.error.message
         }
     }
 })

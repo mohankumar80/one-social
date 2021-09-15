@@ -13,23 +13,27 @@ export default function Feed() {
 
     const state = useSelector(state => state);
     const feed = state.feed;
-    const dispatch = useDispatch()
-
     const likes = state.likes;
+    const profile = state.profile;
+    const userId = profile.user._id;
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
         if(feed.status === "idle") {
-            dispatch(loadFeed());
+            dispatch(loadFeed(userId));
         }
-    }, [feed, dispatch])
+    }, [feed, dispatch, userId])
 
     const incrementLikes = post => {
-        dispatch(likeButtonPressed(post._id))
+        const postId = post._id;
+        dispatch(likeButtonPressed({userId, postId}))
         dispatch(incrementLikesInLiked(post))   
     }
 
     const decrementLikes = post => {
-        dispatch(dislikeButtonPressed(post._id))
+        const postId = post._id
+        dispatch(dislikeButtonPressed({userId, postId}))
         dispatch(decrementLikesInLiked(post))   
     }
 

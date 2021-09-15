@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { addPost } from './postsSlice';
 
@@ -6,7 +7,9 @@ export default function AddPost() {
 
     const [tweetContent, setTweetContent] = useState('');
 
-    const dispatch = useDispatch();
+    const profile = useSelector(state => state.profile)
+    const userId = profile.user._id;
+    const dispatch = useDispatch();    
 
     const changeTweetContent = (e) => {
         setTweetContent(e.target.value)
@@ -26,7 +29,7 @@ export default function AddPost() {
             <button 
                 className="block bg-blue-700 hover:bg-blue-900 px-4 py-2 rounded-full text-white" 
                 onClick={() => {
-                    dispatch(addPost(tweetContent))
+                    dispatch(addPost({userId, tweetContent}))
                     setTweetContent("")
                     }
                 }

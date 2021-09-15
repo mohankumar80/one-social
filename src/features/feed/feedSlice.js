@@ -1,33 +1,31 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const loadFeed = createAsyncThunk("feed/loadFeed", async () => {
-    const response = await axios.get(`https://one-social-backend.herokuapp.com/user/613c46496bc01f736e105515/feed`);
-    console.log(response)
+export const loadFeed = createAsyncThunk("feed/loadFeed", async (userId) => {
+    const response = await axios.get(`https://one-social-backend.herokuapp.com/user/${userId}/feed`);
     return response.data;
 })
 
-export const likeButtonPressed = createAsyncThunk("feed/likeButtonPressed", async (postId) => {
-    const response = await axios.put(`https://one-social-backend.herokuapp.com/user/613c46496bc01f736e105515/post/like-post/${postId}`)
+export const likeButtonPressed = createAsyncThunk("feed/likeButtonPressed", async ({userId, postId}) => {
+    const response = await axios.put(`https://one-social-backend.herokuapp.com/user/${userId}/post/like-post/${postId}`)
     return response.data
 })
 
-export const dislikeButtonPressed = createAsyncThunk("fee/dislikeButtonPressed", async (postId) => {
-    const response = await axios.patch(`https://one-social-backend.herokuapp.com/user/613c46496bc01f736e105515/post/like-post/${postId}`)
+export const dislikeButtonPressed = createAsyncThunk("fee/dislikeButtonPressed", async ({userId, postId}) => {
+    const response = await axios.patch(`https://one-social-backend.herokuapp.com/user/${userId}/post/like-post/${postId}`)
     return response.data;
 })
 
-export const addComment = createAsyncThunk("feed/addComment", async ({postId, comment}) => {
-    const response = await axios.post(`https://one-social-backend.herokuapp.com/user/613c46496bc01f736e105515/post/comment/${postId}`, {
+export const addComment = createAsyncThunk("feed/addComment", async ({userId, postId, comment}) => {
+    const response = await axios.post(`https://one-social-backend.herokuapp.com/user/${userId}/post/comment/${postId}`, {
         comment
     })
-    console.log(response)
     return response.data;
 })
 
-export const followButtonPressed = createAsyncThunk("search/followButtonPressed", async (userId) => {
-    const response = await axios.post(`https://one-social-backend.herokuapp.com/user/613c46496bc01f736e105515/follow-user`, {
-        toBeFollowedUserID: userId
+export const followButtonPressed = createAsyncThunk("search/followButtonPressed", async ({ userId, toBeFollowedUserID }) => {
+    const response = await axios.post(`https://one-social-backend.herokuapp.com/user/${userId}/follow-user`, {
+        toBeFollowedUserID
     })
     return response.data;
 })
@@ -52,6 +50,7 @@ export const feedSlice = createSlice({
 
         [loadFeed.rejected]: (state, action) => {
             state.status = "failed"
+            state.error = action.error.message
         },
 
         [likeButtonPressed.pending]: (state) => {
@@ -66,6 +65,7 @@ export const feedSlice = createSlice({
 
         [likeButtonPressed.rejected]: (state, action) => {
             state.status = "failed"
+            state.error = action.error.message
         },
 
         [dislikeButtonPressed.pending]: (state) => {
@@ -80,6 +80,7 @@ export const feedSlice = createSlice({
 
         [dislikeButtonPressed.rejected]: (state, action) => {
             state.status = "failed"
+            state.error = action.error.message
         },
 
         [addComment.pending]: (state) => {
@@ -94,6 +95,7 @@ export const feedSlice = createSlice({
 
         [addComment.rejected]: (state, action) => {
             state.status = "failed"
+            state.error = action.error.message
         },
         
         [followButtonPressed.pending]: (state) => {
@@ -105,6 +107,7 @@ export const feedSlice = createSlice({
         },
         [followButtonPressed.rejected]: (state, action) => {
             state.status = 'failed'
+            state.error = action.error.message
         },
     }
 })

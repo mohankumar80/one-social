@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const loadLikes = createAsyncThunk("likes/loadLikes", async () => {
-    const response = await axios.get(`https://one-social-backend.herokuapp.com/user/613c46496bc01f736e105515/post/like-post`);
+export const loadLikes = createAsyncThunk("likes/loadLikes", async (userId) => {
+    const response = await axios.get(`https://one-social-backend.herokuapp.com/user/${userId}/post/like-post`);
     return response.data;
 })
 
@@ -41,7 +41,7 @@ export const likesSlice = createSlice({
 
         [loadLikes.rejected]: (state, action) => {
             state.status = "failed"
-            // state.error = action.payload.message;
+            state.error = action.error.message
         }
     }
 })

@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const searchButtonPressed = createAsyncThunk("search/searchButtonPressed", async (username) => {
-    const response = await axios.post(`https://one-social-backend.herokuapp.com/user/613c46496bc01f736e105515/search-user`, {
-        username
+export const searchButtonPressed = createAsyncThunk("search/searchButtonPressed", async ({ userId, searchUser }) => {
+    const response = await axios.post(`https://one-social-backend.herokuapp.com/user/${userId}/search-user`, {
+        username: searchUser
     })
     return response.data;
 })
@@ -26,6 +26,7 @@ export const searchSlice = createSlice({
         },
         [searchButtonPressed.rejected]: (state, action) => {
             state.status = 'failed'
+            state.error = action.error.message
         }
     }
 })

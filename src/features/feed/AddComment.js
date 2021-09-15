@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addComment } from "./feedSlice";
 
 export default function AddComment({ postId }) {
 
     const dispatch = useDispatch()
     const [comment, setComment] = useState('');
+    const state = useSelector(state => state)
+    const userId = state.profile.user._id;
 
     return (
         <div className="AddComment px-2 py-8 mx-auto">
@@ -18,7 +20,7 @@ export default function AddComment({ postId }) {
             />
             <button 
                 className="border-2 border-l-0 border-black rounded-r-full py-2 px-4 focus:outline-none"
-                onClick={() => dispatch(addComment({postId, comment}))}
+                onClick={() => dispatch(addComment({userId, postId, comment}))}
                 > 
                 comment 
             </button>

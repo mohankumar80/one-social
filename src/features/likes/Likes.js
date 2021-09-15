@@ -6,14 +6,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function Likes() {
 
-    const likes = useSelector(state => state.likes);
+    const state = useSelector(state => state);
+    const likes = state.likes;
+    const profile = state.profile;
+    const userId = profile.user._id;
+
     const dispatch = useDispatch()
 
     useEffect(() => {
         if(likes.status === "idle") {
-            dispatch(loadLikes());
+            dispatch(loadLikes(userId));
         }
-    }, [likes, dispatch])
+    }, [userId, likes, dispatch])
 
     return (
         <div className="Likes">
