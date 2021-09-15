@@ -1,0 +1,38 @@
+.App {
+    @apply font-mono
+}
+
+.Routes {
+    @apply ml-60 border-l w-3/5
+}
+
+.Navbar {
+    @apply fixed
+}
+
+.nav-items {
+    @apply my-1
+}
+
+.nav-links {
+    @apply text-xl font-semibold my-12
+}
+
+.selected {
+    @apply text-blue-700
+}
+
+
+/* post */
+
+.post-card {
+    @apply border-t-2 border-b p-4
+}
+
+.post-user {
+    @apply font-semibold
+}
+
+.post-username {
+    @apply text-gray-600 font-normal
+}
