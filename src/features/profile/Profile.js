@@ -9,7 +9,7 @@ export default function Profile() {
     return (
         <div key={user._id} className="Profile p-10">
             <p className="text-3xl font-bold">{user.name}</p>
-            <p className="">@{user.username}</p>
+            <p>@{user.username}</p>
             <p>About Me: {user.about}</p>
             <p>followers: {user.followers.length}</p>
             <p>following: {user.following.length}</p>

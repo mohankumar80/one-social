@@ -5,5 +5,5 @@ export default function PrivateRoute(props) {
     const profile = useSelector(state => state.profile)
     const userId = profile.user?._id;
     
-    return userId ? <Route {...props} state={{ from: props.path }} /> : <Navigate to="/login" />
+    return userId ? <Route {...props} /> : <Navigate to="/login" state={{ from: props.path }} />
 }

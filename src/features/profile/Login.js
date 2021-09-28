@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { loadProfile } from './profileSlice'
 
 export default function Login() {
@@ -10,10 +11,19 @@ export default function Login() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate();
+    const { state } = useLocation();
+    
+    const profile = useSelector(state => state.profile);
+
+    useEffect(() => {
+        if(Object.keys(profile.user).length !== 0 && profile.user.constructor === Object) {
+            navigate("/")
+        }
+    }, [profile.user, navigate])
 
     const loginUser = (username, password) => {
         dispatch(loadProfile({ username, password }))
-        navigate("/")
+        navigate(state?.from)
     }
     
     return (
