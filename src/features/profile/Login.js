@@ -6,8 +6,8 @@ import { loadProfile } from './profileSlice'
 
 export default function Login() {
 
-    const [ username, setUsername ] = useState('')
-    const [ password, setPassword ] = useState('')
+    const [ username, setUsername ] = useState('puram')
+    const [ password, setPassword ] = useState('12345678')
 
     const dispatch = useDispatch()
     const navigate = useNavigate();
