@@ -8,6 +8,13 @@ export const loadProfile = createAsyncThunk("profile/loadProfile", async ({usern
     return response.data;
 })
 
+export const createNewUser = createAsyncThunk("profile/createNewUser", async({ name, username, password, email, about }) => {
+    const response = await axios.post(`https://one-social-backend.herokuapp.com/user/signup`, {
+        name, username, password, email, about
+    })
+    return response.data;
+})
+
 export const profileSlice = createSlice({
     name: "profile",
     initialState: {
@@ -27,6 +34,16 @@ export const profileSlice = createSlice({
         [loadProfile.rejected]: (state, action) => {
             state.status = "failed"
             state.error = action.error.message
+        },
+
+        [createNewUser.pending]: (state) => {
+            state.status = "loading"
+        },
+        [createNewUser.fulfilled]: (state) => {
+            state.status = "success"
+        },
+        [createNewUser.rejected]: (state) => {
+            state.status = "failed"
         }
     }
 })

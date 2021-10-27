@@ -36,3 +36,28 @@
 .post-username {
     @apply text-gray-600 font-normal
 }
+
+.Login,
+.Signup {
+    @apply border-2 border-black rounded-lg text-center
+}
+
+.container {
+    @apply py-8 px-8
+}
+
+.input-field {
+    @apply border-2 border-black block my-4 rounded-md w-full p-1
+}
+
+.input-field:focus {
+    @apply outline-none border-0 border-b-2 rounded-none
+}
+
+.login-btn {
+    @apply bg-blue-500 text-white py-1 px-4 rounded-sm
+}
+
+.sign-up-btn {
+    @apply border-t-2 border-black block underline text-blue-500 p-4
+}
