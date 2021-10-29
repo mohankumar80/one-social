@@ -40,6 +40,7 @@ export default function Feed() {
     return (
         <div className="Feed">
             <AddPost />
+            { feed.status !== "success" && <h3 className="text-center">loading ...</h3> }
             {
                 feed.feed.map(feedPost => {
                     return <div key={feedPost._id} className="post-card">

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { loadProfile } from './profileSlice'
 
 export default function Login() {
@@ -24,7 +25,10 @@ export default function Login() {
 
     const loginUser = (username, password) => {
         dispatch(loadProfile({ username, password }))
-        navigate(state?.from ? state.from : "/")
+        toast.success("Login Successfull", {
+            position: toast.POSITION.BOTTOM_CENTER
+        })
+        navigate("/")
     }
     
     return (

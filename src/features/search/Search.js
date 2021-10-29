@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { searchButtonPressed } from "./searchSlice";
-import { followButtonPressed } from "../feed/feedSlice";
+import { followButtonPressed, unfollowButtonPressed } from "../feed/feedSlice";
 
 export default function Search() {
 
@@ -11,10 +11,13 @@ export default function Search() {
     const state = useSelector(state => state)
     const search = state.search;
     const userId = state.profile.user._id;
-    console.log(userId, "from search")
 
     const followUser = (userId, toBeFollowedUserID) => {
         dispatch(followButtonPressed({userId, toBeFollowedUserID}))
+    }
+
+    const unfollowUser = (userId, toBeUnfollowedUserID) => {
+        dispatch(unfollowButtonPressed({userId, toBeUnfollowedUserID}))
     }
 
     return (
@@ -40,12 +43,22 @@ export default function Search() {
                         <p>followers: {user.followers.length}</p>
                         <p>following: {user.following.length}</p>
                         <p>posts: {user.posts.length}</p>
-                        <button 
-                            className="bg-blue-700 focus:bg-blue-900 text-white px-4 py-2 rounded-full"
-                            onClick={() => followUser(userId, user._id)}
-                        > 
-                            follow 
-                        </button>
+                        {
+                            state.profile.user.following.find(userFollowing => userFollowing.username === user.username)
+                            ? <button 
+                                className="bg-blue-500 focus:bg-blue-900 text-white px-4 py-2 rounded-full" 
+                                onClick={() => unfollowUser(userId, user._id)}
+                            > 
+                                unfollow 
+                            </button>
+                            : <button 
+                                className="bg-blue-700 focus:bg-blue-900 text-white px-4 py-2 rounded-full"
+                                onClick={() => followUser(userId, user._id)}
+                            > 
+                                follow 
+                            </button>
+                        }
+                        
                     </div>
                 })
             }

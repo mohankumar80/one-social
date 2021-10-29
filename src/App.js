@@ -12,11 +12,14 @@ import IndividualPost from "./features/feed/IndividualPost";
 import { Navbar, Sidebar, Signup, NotFound } from "./components/index";
 import Login from "./features/profile/Login";
 import PrivateRoute from "./PrivateRoute";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
   return (
     <div className="App flex">
       <Navbar />
+      <ToastContainer />
       <div className="Routes">
         <Routes>
           <PrivateRoute path="/" element={<Feed />} />
