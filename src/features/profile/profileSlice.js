@@ -22,7 +22,12 @@ export const profileSlice = createSlice({
         user: {},
         error: null
     },
-    reducers: {},
+    reducers: {
+        logoutUser: (state) => {
+            state.status = "idle"
+            state.user = {}
+        }
+    },
     extraReducers: {
         [loadProfile.pending]: (state) => {
             state.status = "loading"
@@ -47,5 +52,7 @@ export const profileSlice = createSlice({
         }
     }
 })
+
+export const { logoutUser } = profileSlice.actions;
 
 export default profileSlice.reducer;
