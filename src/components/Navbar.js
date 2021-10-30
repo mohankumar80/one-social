@@ -11,8 +11,7 @@ export default function Navbar() {
     const user = state.profile?.user;
     const dispatch = useDispatch();
     const navigate = useNavigate()
-    console.log(user)
-
+    
     const signoutUser = () => {
         dispatch(logoutUser())
         navigate("/login")
